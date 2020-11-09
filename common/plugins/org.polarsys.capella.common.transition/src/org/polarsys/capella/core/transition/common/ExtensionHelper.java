@@ -19,7 +19,9 @@ import java.util.LinkedList;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.polarsys.capella.core.transition.common.constants.ISchemaConstants;
 import org.polarsys.capella.core.transition.common.handlers.IHandler;
 import org.polarsys.kitalpha.transposer.rules.handler.rules.api.IContext;
@@ -70,23 +72,18 @@ public class ExtensionHelper {
     return false;
   }
 
-  public static Collection<IHandler> collectFromExtensions(IContext context, String extension_id, String childName,
-      String expectedPurpose, String expectedMapping) {
+  @SuppressWarnings("unchecked")
+  public static <T> Collection<T> collectFromExtensions(IContext context, String extension_id, String childName, String expectedPurpose, String expectedMapping){
     IExtensionPoint point = Platform.getExtensionRegistry().getExtensionPoint(extension_id);
-    Collection<IHandler> result = new LinkedList<IHandler>();
-
+    Collection<T> result = new LinkedList<>();
     for (IConfigurationElement element : point.getConfigurationElements()) {
       if (isValidExtension(element, expectedPurpose, expectedMapping)) {
         for (IConfigurationElement child : element.getChildren()) {
-
           if (childName.equals(child.getName())) {
             try {
-              Object extension = child.createExecutableExtension(ISchemaConstants.CLASS);
-              if ((extension != null) && (extension instanceof IHandler)) {
-                result.add((IHandler) extension);
-              }
-            } catch (CoreException exception) {
-              // Catch exception silently, we just can't load an extension
+              result.add((T) child.createExecutableExtension(ISchemaConstants.CLASS));
+            } catch (CoreException e) {
+              Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
             }
           }
         }

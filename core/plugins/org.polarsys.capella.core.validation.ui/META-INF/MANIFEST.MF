@@ -5,17 +5,13 @@ Bundle-SymbolicName: org.polarsys.capella.core.validation.ui;singleton:=true
 Bundle-Version: 5.0.0.qualifier
 Bundle-Activator: org.polarsys.capella.core.validation.ui.CapellaValidationUIActivator
 Bundle-Vendor: %providerName
-Require-Bundle: org.eclipse.core.runtime,
- org.polarsys.capella.core.validation,
- org.polarsys.capella.common.ui.services,
- org.polarsys.capella.core.ui.reportlog,
- org.polarsys.capella.core.preferences,
+Require-Bundle: org.polarsys.capella.core.validation,
  org.polarsys.capella.core.platform.sirius.ui.actions,
- org.polarsys.capella.core.menu.dynamic
+ org.polarsys.capella.core.menu.dynamic,
+ org.polarsys.capella.common.tools.report.appenders.usage
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Localization: plugin
 Bundle-ActivationPolicy: lazy
-Import-Package: org.polarsys.capella.common.tools.report.appenders.reportlogview
 Export-Package: org.polarsys.capella.core.validation.helpers,
  org.polarsys.capella.core.validation.service,
  org.polarsys.capella.core.validation.ui,

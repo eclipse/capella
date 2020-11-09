@@ -110,8 +110,8 @@ public class ValidationActionProvider extends CommonActionProvider {
    * @param imageDescriptor
    * @return
    */
-  protected ValidateAction createValidationAction(boolean isRootAction, IFile file, ISelectionProvider selectionProvider, ImageDescriptor imageDescriptor) {
-    ValidateAction validationAction = new EPFValidationAction(isRootAction, file);
+  protected ValidateAction createValidationAction(IFile file, ISelectionProvider selectionProvider, ImageDescriptor imageDescriptor) {
+    ValidateAction validationAction = new EPFValidationAction(file);
 
     validationAction.setImageDescriptor(imageDescriptor);
 
@@ -170,20 +170,16 @@ public class ValidationActionProvider extends CommonActionProvider {
       imageDescriptor = CapellaValidationUIActivator.getDefault().getImageDescriptor(CapellaValidationUIActivator.IMG_ENABLED_VALIDATE);
       userValidationActions = new ArrayList<ValidateAction>();
       menu.prependToGroup("group.validation", defaultValidationAction); //$NON-NLS-1$
-
     }
   }
 
-  /**
-   * 
-   */
   private void initActions() {
     ISelectionProvider selectionProvider = commonViewSite.getSelectionProvider();
     imageDescriptor = CapellaValidationUIActivator.getDefault().getImageDescriptor(CapellaValidationUIActivator.IMG_ENABLED_VALIDATE);
     userValidationActions = new ArrayList<ValidateAction>();
     defaultValidationAction = createDefaultValidation();// ValidationAction(false, null, selectionProvider, imageDescriptor);
     for (IFile file : PreferencesHelper.retrieveUserDefinedPreferenceFiles(selectionProvider, EPFValidationAction.EPF_EXTNAME)) {
-      userValidationActions.add(createValidationAction(false, file, selectionProvider, imageDescriptor));
+      userValidationActions.add(createValidationAction(file, selectionProvider, imageDescriptor));
     }
   }
 

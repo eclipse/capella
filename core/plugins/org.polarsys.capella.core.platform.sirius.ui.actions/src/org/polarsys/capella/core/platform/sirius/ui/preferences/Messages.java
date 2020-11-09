@@ -28,12 +28,15 @@ public class Messages extends NLS {
   public static String CapellaPreferencePage_Description;
   public static String CapellaPreferencePage_DetectionVersion_Title;
   public static String CapellaPreferencePage_Title;
+  public static String CapellaValidationPreferencesPage_General_Group_Label;
+  public static String CapellaValidationPreferencesPage_General_Group_Tooltip;
+  public static String CapellaValidationPreferencesPage_ValidationScope_Group_Tooltip;
+  public static String CapellaValidationPreferencesPage_ValidationScope_Group_Label;
   public static String WizardPreferencePage_Description;
   public static String WizardPreferencePage_Title;
   public static String ModelValidationPreferencePage_Description;
   public static String ModelValidationPreferencePage_DeletePreviousResults_Title;
   public static String DeletePreferencePage_ProtectedElements_Title;
-
   public static String DeletePreferencePage_MultipartGroup_Title;
   public static String DeletePreferencePage_MultipartGroup_Description;
 

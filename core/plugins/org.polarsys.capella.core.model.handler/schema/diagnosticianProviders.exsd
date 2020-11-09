@@ -3,10 +3,10 @@
 <schema targetNamespace="org.polarsys.capella.core.model.handler" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="org.polarsys.capella.core.model.handler" id="diagnosticianProviders" name="diagnosticianProviders"/>
+         <meta.schema plugin="org.polarsys.capella.core.model.handler" id="diagnosticianProviders" name="Diagnostician Providers"/>
       </appInfo>
       <documentation>
-         Allows plugins to choose a diagnostician for model validation
+         Allows plugins to contribute EMF Diagnosticians for model validation
       </documentation>
    </annotation>
 
@@ -17,7 +17,7 @@
          </appInfo>
       </annotation>
       <complexType>
-         <sequence>
+         <sequence minOccurs="1" maxOccurs="unbounded">
             <element ref="provider"/>
          </sequence>
          <attribute name="point" type="string" use="required">
@@ -57,6 +57,27 @@
                <appInfo>
                   <meta.attribute kind="java" basedOn="org.polarsys.capella.core.model.handler.validation.AbstractDiagnosticianProvider:"/>
                </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The ID for this provider
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="description" type="string">
+            <annotation>
+               <documentation>
+                  Description of this provider
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
             </annotation>
          </attribute>
       </complexType>

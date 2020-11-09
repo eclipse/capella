@@ -18,6 +18,6 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 
 public abstract class AbstractDiagnosticianProvider {
 
-	public abstract Diagnostician getDiagnostician(AdapterFactory adapterFactory_p, IProgressMonitor progressMonitor_p);
-	
+  public abstract Diagnostician getDiagnostician(AdapterFactory adapterFactory_p, IProgressMonitor progressMonitor_p);
+
 }

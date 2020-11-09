@@ -9,10 +9,14 @@ Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.expressions,
  org.eclipse.emf.validation;visibility:=reexport,
  org.polarsys.capella.core.model.helpers;visibility:=reexport,
- org.polarsys.capella.core.model.handler;visibility:=reexport,
  org.polarsys.capella.core.model.preferences;visibility:=reexport,
  org.polarsys.capella.common.re.gen,
- org.polarsys.capella.common.ui
+ org.polarsys.capella.common.ui,
+ org.polarsys.kitalpha.transposer.rules.handler,
+ org.polarsys.kitalpha.cadence.core,
+ org.polarsys.capella.common.transition,
+ org.polarsys.capella.common.transition,
+ org.polarsys.capella.core.transition.system
 Export-Package: org.polarsys.capella.core.validation,
  org.polarsys.capella.core.validation.export,
  org.polarsys.capella.core.validation.expressions,
@@ -20,6 +24,7 @@ Export-Package: org.polarsys.capella.core.validation,
  org.polarsys.capella.core.validation.filter.group,
  org.polarsys.capella.core.validation.prefs,
  org.polarsys.capella.core.validation.rule,
+ org.polarsys.capella.core.validation.scope,
  org.polarsys.capella.core.validation.utils
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.polarsys.capella.core.validation.CapellaValidationActivator

@@ -14,8 +14,10 @@ package org.polarsys.capella.test.validation.rules.ju.testcases;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IMarker;
@@ -42,6 +44,8 @@ import org.polarsys.capella.core.data.capellamodeller.Project;
 import org.polarsys.capella.core.libraries.model.ICapellaModel;
 import org.polarsys.capella.core.model.handler.markers.ICapellaValidationConstants;
 import org.polarsys.capella.core.validation.CapellaValidationActivator;
+import org.polarsys.capella.core.validation.EValidatorAdapter;
+import org.polarsys.capella.core.validation.utils.ValidationHelper;
 import org.polarsys.capella.test.framework.api.BasicTestCase;
 import org.polarsys.capella.test.framework.api.OracleDefinition;
 
@@ -100,7 +104,8 @@ public abstract class ValidationRuleTestCase extends BasicTestCase {
     super.setUp();
 
     // init validator
-    validator = CapellaValidationActivator.getDefault().getCapellaValidatorAdapter().getValidator();
+    validator = ValidationHelper.newDefaultCapellaBatchValidator();
+
     ModelValidationService.getInstance().loadXmlConstraintDeclarations();// load the xml definition of constraints
     // get the descriptor of the rule to test
     ConstraintRegistry registry = ConstraintRegistry.getInstance();
@@ -162,12 +167,15 @@ public abstract class ValidationRuleTestCase extends BasicTestCase {
       }
       // check the validation result for each objects
       List<EObject> failedObjects = new ArrayList<EObject>();
-      Diagnostician diagnostician = new Diagnostician();
+      Diagnostician diagnostician = new Diagnostician(CapellaValidationActivator.getDefault().getCapellaValidatorRegistry());
+      Map<Object, Object> contextEntries = new HashMap<>();
+      contextEntries.put(EValidatorAdapter.BATCH_VALIDATOR, validator);
+      
       for (EObject object : objectsToValidate) {
         String objectID = getId(object);
         OracleDefinition oracleDef = objectID2OracleDefinition.get(objectID);
-        Diagnostic diagnostic = diagnostician.validate(object);
-        
+        Diagnostic diagnostic = diagnostician.validate(object, contextEntries);
+
         if ((diagnostic.getSeverity() == Diagnostic.OK) && (oracleDef != null) && oracleDef.getNbExpectedErrors() > 0) {
           fail("Validation rule " + ruleID + " has not detected an error on object " + objectID + " while it must be the case"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         } else {
@@ -224,7 +232,7 @@ public abstract class ValidationRuleTestCase extends BasicTestCase {
     String ruleIdThrown = ((ConstraintStatusDiagnostic) nestedDiag).getConstraintStatus().getConstraint()
         .getDescriptor().getId();
     assertEquals("Validation rule " + ruleIdThrown + " has detected an error but " + ruleID + " expected",
-        ruleIdThrown, ruleID);
+        ruleID, ruleIdThrown);
   }
 
   protected String getAirdURI(EObject object) {

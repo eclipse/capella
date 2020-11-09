@@ -12,7 +12,6 @@
  *******************************************************************************/
 package org.polarsys.capella.core.data.fa.ui.wizards.dialogs;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,6 +19,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.validation.service.IConstraintDescriptor;
 import org.eclipse.emf.validation.service.IConstraintFilter;
+import org.eclipse.emf.validation.service.IValidator;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.IFontProvider;
@@ -30,7 +30,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
 import org.polarsys.capella.common.ui.providers.MDEAdapterFactoryLabelProvider;
-import org.polarsys.capella.core.validation.CapellaValidationActivator;
 import org.polarsys.capella.core.validation.utils.ValidationHelper;
 
 public class EIAllocationLabelProvider extends MDEAdapterFactoryLabelProvider implements IBaseLabelProvider, IColorProvider, IFontProvider {
@@ -38,33 +37,41 @@ public class EIAllocationLabelProvider extends MDEAdapterFactoryLabelProvider im
   private final EIAllocationTreeViewer treeViewer;
   private LinkManager linkManager;
   private Font startedLinkElementFont;
+  private final IValidator<EObject> validator;
+  public final static String VALIDATION_KEY = "Validation"; //$NON-NLS-1$
+  
+  @SuppressWarnings("nls")
+  private static List<String> _srcDesc = Arrays.asList(
+      "org.polarsys.capella.core.data.fa.validation.TC_DF_10",
+      "org.polarsys.capella.core.data.fa.validation.TC_DF_11",
+      "org.polarsys.capella.core.data.fa.validation.TC_DF_12",
+      "org.polarsys.capella.core.data.fa.validation.TC_DF_13",
+      "org.polarsys.capella.core.data.fa.validation.TC_DF_14");
 
-  private IConstraintFilter _filter = new IConstraintFilter() {
-    @Override
-    public boolean accept(IConstraintDescriptor constraint, EObject target) {
-      return (isSourceViewer ? _srcDesc.contains(constraint) : _tgtDesc.contains(constraint));
-    }
-  };
-
-  private static final String prefix = "org.polarsys.capella.core.data.fa.validation."; //$NON-NLS-1$
-
-  protected List<IConstraintDescriptor> _srcDesc = getConstraintDescriptors(Arrays.asList(
-    new String[]{prefix+"TC_DF_10",prefix+"TC_DF_11",prefix+"TC_DF_12",prefix+"TC_DF_13",prefix+"TC_DF_14"})); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$;
-
-  protected List<IConstraintDescriptor> _tgtDesc = getConstraintDescriptors(Arrays.asList(
-    new String[]{prefix+"TC_DF_11",prefix+"TC_DF_12",prefix+"TC_DF_13",prefix+"TC_DF_14"})); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //;
+  @SuppressWarnings("nls")
+  private static List<String> _tgtDesc = Arrays.asList(
+      "org.polarsys.capella.core.data.fa.validation.TC_DF_11",
+      "org.polarsys.capella.core.data.fa.validation.TC_DF_12",
+      "org.polarsys.capella.core.data.fa.validation.TC_DF_13",
+      "org.polarsys.capella.core.data.fa.validation.TC_DF_14");
 
   /**
    * @param linkManager
    * @param treeViewer
    * @param isSourceViewer
    */
-	public EIAllocationLabelProvider(LinkManager linkManager, EIAllocationTreeViewer treeViewer, boolean isSourceViewer) {
-	  super();
-	  this.isSourceViewer = isSourceViewer;
+  public EIAllocationLabelProvider(LinkManager linkManager, EIAllocationTreeViewer treeViewer, boolean isSourceViewer) {
+    this.isSourceViewer = isSourceViewer;
     this.treeViewer = treeViewer;
     this.linkManager = linkManager;
-	}
+    validator = ValidationHelper.newDefaultCapellaBatchValidator();
+    validator.addConstraintFilter(new IConstraintFilter() {
+      @Override
+      public boolean accept(IConstraintDescriptor constraint, EObject target) {
+        return (isSourceViewer ? _srcDesc.contains(constraint.getId()) : _tgtDesc.contains(constraint.getId()));
+      }
+    });
+  }
 
   /**
    * @see org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider#dispose()
@@ -102,13 +109,8 @@ public class EIAllocationLabelProvider extends MDEAdapterFactoryLabelProvider im
     return super.getFont(element);
   }
 
-  public final static String VALIDATION_KEY = "Validation"; //$NON-NLS-1$
-
   private boolean isValid(EObject element) {
-    CapellaValidationActivator.getDefault().getCapellaValidatorAdapter().getValidator().addConstraintFilter(_filter);
-    IStatus status = CapellaValidationActivator.getDefault().getCapellaValidatorAdapter().getValidator().validate(element);
-    CapellaValidationActivator.getDefault().getCapellaValidatorAdapter().getValidator().removeConstraintFilter(_filter);
-
+    IStatus status = validator.validate(element);
     Widget w = treeViewer.findItem(element);
     if (w instanceof TreeItem) {
       if (!status.isOK()) {
@@ -124,31 +126,13 @@ public class EIAllocationLabelProvider extends MDEAdapterFactoryLabelProvider im
    * {@inheritDoc}
    */
   @Override
-	public Color getForeground(Object element) {
+  public Color getForeground(Object element) {
     if (!isValid((EObject) element)) {
       return Display.getCurrent().getSystemColor(SWT.COLOR_RED);
     }
-	  return super.getForeground(element);
-	}
-  
-  /**
-   * Get all constraints contributed via the EMF Validation framework for Capella purposes
-   * e.g. rules stored into the Capella constraint category
-   * @return
-   */
-  public static List<IConstraintDescriptor> getConstraintDescriptors(List<String> ids) {
-    List<IConstraintDescriptor> result = new ArrayList<IConstraintDescriptor>();
-
-    ValidationHelper.ensureEMFValidationActivation();
-
-    for (IConstraintDescriptor icd: ValidationHelper.getAllCapellaConstraintDescriptors()) {
-      String id = icd.getId();
-      if (ids.contains(id)) {
-        result.add(icd);
-      }
-    }
-    return result;
+    return super.getForeground(element);
   }
+  
 
   /**
    * Create started link element font.

@@ -13,16 +13,17 @@
 package org.polarsys.capella.core.transition.common.handlers;
 
 import org.eclipse.core.runtime.IStatus;
-
+import org.eclipse.core.runtime.Status;
 import org.polarsys.kitalpha.transposer.rules.handler.rules.api.IContext;
 
-/**
- *
- */
 public interface IHandler {
 
-  IStatus init(IContext context);
+  default IStatus init(IContext context) {
+    return new Status(IStatus.OK, getClass().getCanonicalName(), "init ok"); //$NON-NLS-1$
+  }
 
-  IStatus dispose(IContext context);
+  default IStatus dispose(IContext context) {
+    return Status.OK_STATUS;
+  }
 
 }

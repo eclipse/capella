@@ -29,9 +29,22 @@ public class CapellaValidateComlineAction extends CapellaValidateAction {
 
   private Resource resourceToValidate;
   private Diagnostic diagnostic;
+  private String providerId;
 
   public void setSelectedObjects(List<EObject> selectedObjects) {
     this.selectedObjects = selectedObjects;
+  }
+
+  public void setDiagnosticianProviderId(String id) {
+    this.providerId = id;
+  }
+
+  @Override
+  protected String getDiagnosticianProviderId() {
+    if (providerId != null) {
+      return providerId;
+    }
+    return super.getDiagnosticianProviderId();
   }
 
   /**
@@ -45,7 +58,7 @@ public class CapellaValidateComlineAction extends CapellaValidateAction {
       handleDiagnostic(diagnostic);
     }
   }
-  
+
   private boolean isSetEditingDomain(){
     if(domain == null && !selectedObjects.isEmpty()){
       ExecutionManager executionManager = TransactionHelper.getExecutionManager(selectedObjects);

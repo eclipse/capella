@@ -42,29 +42,11 @@ import org.polarsys.capella.common.ui.menu.dynamic.AbstractActionProvider;
  */
 public class DynamicActionProvider extends AbstractActionProvider {
 
-  /**
-   * 
-   */
   private ValidateAction defaultValidationAction;
-
-  /*
-   * 
-   */
   private List<ValidateAction> userValidationActions;
-
-  /*
-   * 
-   */
   private ImageDescriptor imageDescriptor;
-
-  /*
-   * 
-   */
   private ISelectionProvider selectionProvider;
 
-  /**
-   * 
-   */
   public DynamicActionProvider() {
     // Initialize the action provider to force it to load menu contributors.
     ActionContributionProvider.getInstance();
@@ -82,7 +64,7 @@ public class DynamicActionProvider extends AbstractActionProvider {
     userValidationActions = new ArrayList<ValidateAction>();
     defaultValidationAction = createDefaultValidation(); // createValidationAction(false, null, selectionProvider, imageDescriptor);
     for (IFile file : PreferencesHelper.retrieveUserDefinedPreferenceFiles(selectionProvider, EPFValidationAction.EPF_EXTNAME)) {
-      userValidationActions.add(createValidationAction(false, file, selectionProvider, imageDescriptor));
+      userValidationActions.add(createValidationAction(file, selectionProvider, imageDescriptor));
     }
   }
 
@@ -159,8 +141,8 @@ public class DynamicActionProvider extends AbstractActionProvider {
    * @param imageDescriptor
    * @return
    */
-  protected ValidateAction createValidationAction(boolean isRootAction, IFile file, ISelectionProvider selectionProvider, ImageDescriptor imageDescriptor) {
-    ValidateAction validationAction = new EPFValidationAction(isRootAction, file);
+  protected ValidateAction createValidationAction(IFile file, ISelectionProvider selectionProvider, ImageDescriptor imageDescriptor) {
+    ValidateAction validationAction = new EPFValidationAction(file);
 
     validationAction.setImageDescriptor(imageDescriptor);
 

@@ -188,12 +188,6 @@ The difference between Completeness and Coverage can appear subtle. Completeness
            value="false">
      </persistent>
   </extension>
-  <extension
-        point="org.polarsys.capella.core.model.handler.diagnosticianProviders">
-     <provider
-           class="org.polarsys.capella.core.validation.DiagnosticianProvider">
-     </provider>
-  </extension>
   <extension point="org.eclipse.core.expressions.propertyTesters">
       <propertyTester
          id="org.polarsys.capella.core.validation.expressions.EObjectPropertyTester"
@@ -202,5 +196,43 @@ The difference between Completeness and Coverage can appear subtle. Completeness
          properties="ePackage"
          class="org.polarsys.capella.core.validation.expressions.EObjectPropertyTester">
       </propertyTester>
+  </extension>
+  <extension
+        point="org.polarsys.capella.core.transition.handlers">
+     <handlers
+           mapping="org.polarsys.capella.core.validation.extended"
+           purpose="org.polarsys.capella.core.validation">
+        <scopeRetriever
+              class="org.polarsys.capella.core.validation.scope.DefaultValidationScopeRetriever"
+              id="default">
+        </scopeRetriever>
+        <scopeFilter
+              class="org.polarsys.capella.core.validation.scope.DefaultValidationScopeFilter"
+              id="defaultFilter">
+        </scopeFilter>
+     </handlers>
+     <handlers
+           mapping="org.polarsys.capella.core.validation.legacy"
+           purpose="org.polarsys.capella.core.validation">
+        <scopeRetriever
+              class="org.polarsys.capella.core.transition.system.handlers.scope.PartTypeRetriever"
+              id="legacy">
+        </scopeRetriever>
+     </handlers>
+  </extension>
+  <extension
+        point="org.polarsys.capella.core.model.handler.diagnosticianProviders">
+     <provider
+           class="org.polarsys.capella.core.validation.LegacyDiagnosticianProvider"
+           description="Validate tree of selected objects and follows component-part relations"
+           id="org.polarsys.capella.core.validation.legacy"
+           name="Tree Validation">
+     </provider>
+     <provider
+           class="org.polarsys.capella.core.validation.scope.DefaultScopedDiagnosticianProvider"
+           description="Tree Validation plus: Validate deployed Components, allocated Functions and Interfaces common to validated Components"
+           id="org.polarsys.capella.core.validation.extended"
+           name="Extended Validation">
+     </provider>
   </extension>
 </plugin>

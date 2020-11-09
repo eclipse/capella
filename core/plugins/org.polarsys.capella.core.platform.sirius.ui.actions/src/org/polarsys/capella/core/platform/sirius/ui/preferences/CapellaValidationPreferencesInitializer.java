@@ -12,8 +12,7 @@
  *******************************************************************************/
 package org.polarsys.capella.core.platform.sirius.ui.preferences;
 
-import org.eclipse.core.resources.ProjectScope;
-
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.polarsys.capella.core.commands.preferences.service.AbstractPreferencesInitializer;
 import org.polarsys.capella.core.platform.sirius.ui.actions.CapellaActionsActivator;
 
@@ -28,7 +27,8 @@ public class CapellaValidationPreferencesInitializer extends AbstractPreferences
 
   @Override
   public void initializeDefaultPreferences() {
-    putBoolean(ICapellaValidationPreferences.P_CLEAN_PREVIOUS_VALIDATION_RESULTS, true, ProjectScope.class);
+    putBoolean(ICapellaValidationPreferences.P_CLEAN_PREVIOUS_VALIDATION_RESULTS, true, InstanceScope.class);
+    putString(ICapellaValidationPreferences.P_DIAGNOSTICIAN_PROVIDER, "org.polarsys.capella.core.validation.legacy", InstanceScope.class); //$NON-NLS-1$
   }
 
 }

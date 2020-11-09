@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.validation.internal.EMFModelValidationPlugin;
 import org.eclipse.emf.validation.internal.EMFModelValidationStatusCodes;
 import org.eclipse.emf.validation.service.IConstraintDescriptor;
+import org.eclipse.emf.validation.service.ModelValidationService;
 import org.polarsys.capella.common.mdsofa.common.constant.ICommonConstants;
 import org.polarsys.capella.core.validation.ui.ide.internal.quickfix.CapellaQuickFixExtPointUtil;
 import org.polarsys.capella.core.validation.ui.ide.quickfix.AbstractCapellaMarkerResolution;
@@ -67,10 +68,10 @@ public class NoDuplicateRuleIdsTest extends BasicTestCase {
         logged.add(status_p);
       }
     });
-    
+
     // force loading of constraint descriptors.
-    ValidationHelper.ensureEMFValidationActivation(); 
-    
+    ModelValidationService.getInstance().loadXmlConstraintDeclarations();
+
     // EMF validation logs an error if it finds descriptors with the same ID.
     if (!logged.isEmpty()){
       StringBuilder builder = new StringBuilder();

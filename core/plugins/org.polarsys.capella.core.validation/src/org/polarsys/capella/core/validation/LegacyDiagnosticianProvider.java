@@ -20,18 +20,13 @@ import org.polarsys.capella.core.model.handler.validation.AbstractDiagnosticianP
 import org.polarsys.capella.core.model.handler.validation.CapellaDiagnostician;
 
 /**
- * Provide a Diagnostician to Capella validate actions via the diagnosticianProvider extension point. 
- * A side-effect of using this extension point is that we ensure that this plugin can make any required 
- * modifications to the global EValidator.Registry before any validation action is run.
- * @see CapellaValidationActivator
+ * Provides the old Tree+Part/Type diagnostician.
  */
-public class DiagnosticianProvider extends AbstractDiagnosticianProvider {
+public class LegacyDiagnosticianProvider extends AbstractDiagnosticianProvider {
 
   @Override
-  public Diagnostician getDiagnostician(AdapterFactory adapterFactory_p, IProgressMonitor progressMonitor_p) {
-    // just return a capella diagnostician..
-    // the wanted side effect is that the plugin has been activated at this point
-    return new CapellaDiagnostician(adapterFactory_p, progressMonitor_p);
+  public Diagnostician getDiagnostician(AdapterFactory adapterFactory, IProgressMonitor progressMonitor) {
+    return new CapellaDiagnostician(CapellaValidationActivator.getDefault().getCapellaValidatorRegistry(), adapterFactory, progressMonitor);
   }
 
 }

@@ -16,54 +16,28 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.validation.model.EvaluationMode;
 import org.eclipse.emf.validation.model.IConstraintStatus;
-import org.eclipse.emf.validation.service.ConstraintRegistry;
 import org.eclipse.emf.validation.service.IBatchValidator;
-import org.eclipse.emf.validation.service.IConstraintDescriptor;
-import org.eclipse.emf.validation.service.IConstraintFilter;
-import org.eclipse.emf.validation.service.ModelValidationService;
 import org.polarsys.capella.core.data.cs.Component;
 import org.polarsys.capella.core.projection.interfaces.validation.DWF_I_23_GenerateInterfacesValidator;
-import org.polarsys.capella.core.validation.CapellaValidationActivator;
+import org.polarsys.capella.core.validation.utils.ValidationHelper;
 import org.polarsys.capella.test.framework.api.BasicCommandTestCase;
 
 /**
  * Runs model validation for components, and compares actual and expected validation results for related
  * interfaces/exchange items
  */
-// FIXME cannot use ValidationRuleTest for this because of https://bugs.polarsys.org/show_bug.cgi?id=1342
+// FIXME cannot use ValidationRuleTest for this because of https://bugs.eclipse.org/bugs/show_bug.cgi?id=554209
 public class Rule_DWF_I_23 extends BasicCommandTestCase {
 
-  IBatchValidator validator;
-  IConstraintFilter filter;
+  private IBatchValidator validator;
 
   protected void setUp() throws Exception {
     super.setUp();
-
-    // init validator
-    validator = CapellaValidationActivator.getDefault().getCapellaValidatorAdapter().getValidator();
-    ModelValidationService.getInstance().loadXmlConstraintDeclarations();// load the xml definition of constraints
-    // get the descriptor of the rule to test
-    ConstraintRegistry registry = ConstraintRegistry.getInstance();
-    final IConstraintDescriptor ruleDescriptor = registry.getDescriptor(DWF_I_23_GenerateInterfacesValidator.RULE_ID);
-    assertNotNull(ruleDescriptor);
-
-    filter = new IConstraintFilter() {
-      public boolean accept(IConstraintDescriptor constraint, EObject target) {
-        return ruleDescriptor == constraint;
-      }
-    };
-    validator.addConstraintFilter(filter);
+    validator = ValidationHelper.newValidator(Collections.singleton(DWF_I_23_GenerateInterfacesValidator.RULE_ID), EvaluationMode.BATCH);
   }
-
-  @Override
-  protected void tearDown() throws Exception {
-    validator.removeConstraintFilter(filter);
-    super.tearDown();
-  }
-
 
   @Override
   public List<String> getRequiredTestModels() {

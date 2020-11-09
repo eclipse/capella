@@ -12,9 +12,14 @@
  *******************************************************************************/
 package org.polarsys.capella.core.platform.sirius.ui.preferences;
 
-import org.eclipse.jface.preference.BooleanFieldEditor;
+import java.util.Collection;
 
+import org.eclipse.jface.preference.BooleanFieldEditor;
+import org.eclipse.jface.preference.RadioGroupFieldEditor;
+import org.eclipse.swt.widgets.Group;
 import org.polarsys.capella.core.commands.preferences.service.AbstractDefaultPreferencePage;
+import org.polarsys.capella.core.model.handler.validation.DiagnosticianProviderRegistry;
+import org.polarsys.capella.core.model.handler.validation.DiagnosticianProviderRegistry.Descriptor;
 import org.polarsys.capella.core.platform.sirius.ui.actions.CapellaActionsActivator;
 
 /**
@@ -43,8 +48,22 @@ public class CapellaValidationPreferencesPage extends AbstractDefaultPreferenceP
    */
   @Override
   public void createFieldEditors() {
+    Group generalGroup = createGroup(Messages.CapellaValidationPreferencesPage_General_Group_Label, Messages.CapellaValidationPreferencesPage_General_Group_Tooltip, getFieldEditorParent());
     addField(new BooleanFieldEditor(ICapellaValidationPreferences.P_CLEAN_PREVIOUS_VALIDATION_RESULTS,
-        Messages.ModelValidationPreferencePage_DeletePreviousResults_Title, getFieldEditorParent()));
+        Messages.ModelValidationPreferencePage_DeletePreviousResults_Title, generalGroup));
+
+    Collection<Descriptor> descriptors = DiagnosticianProviderRegistry.INSTANCE.getDescriptors();
+    String[][] labelsAndValues = new String[descriptors.size()][2];
+
+    int i = 0;
+    for (Descriptor d : descriptors) {
+      labelsAndValues[i][0] = d.getName();
+      labelsAndValues[i][1] = d.getID();
+      i++;
+    }
+
+    addField(new RadioGroupFieldEditor(ICapellaValidationPreferences.P_DIAGNOSTICIAN_PROVIDER, Messages.CapellaValidationPreferencesPage_ValidationScope_Group_Label , 1, labelsAndValues, getFieldEditorParent(), true));
+
   }
 
   /**

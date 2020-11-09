@@ -15,8 +15,7 @@ package org.polarsys.capella.core.validation.commandline;
 /**
  */
 public class ValidationCommandLineConstants {
-
   public static final String VALIDATION_CONTEXT = "-validationcontext";//$NON-NLS-1$
   public static final String VALIDATION_RULE_SET = "-validationruleset";//$NON-NLS-1$
-
+  public static final String DIAGNOSTICIAN_PROVIDER_ID = "-diagnosticianProviderId";  //$NON-NLS-1$
 }

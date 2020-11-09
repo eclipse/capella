@@ -477,11 +477,11 @@
             mapping="org.polarsys.capella.common.re"
             purpose="org.polarsys.capella.common.re.scopeElements">
          <scopeRetriever
-               class="org.polarsys.capella.core.re.handlers.scope.PartTypeRetriever"
+               class="org.polarsys.capella.core.transition.system.handlers.scope.PartTypeRetriever"
                id="org.polarsys.capella.core.re.handlers.scope.PartTypeRetriever">
          </scopeRetriever>
          <scopeRetriever
-               class="org.polarsys.capella.core.re.handlers.scope.DeployedElementRetriever"
+               class="org.polarsys.capella.core.transition.system.handlers.scope.DeployedElementRetriever"
                id="org.polarsys.capella.core.re.handlers.scope.DeployedElementRetriever">
          </scopeRetriever>
          <scopeFilter

@@ -20,9 +20,16 @@ import org.eclipse.emf.validation.service.IConstraintDescriptor;
 import org.eclipse.emf.validation.service.IConstraintFilter;
 
 /**
- * Base class to implement constraint filters for Capella.
+ * Only constraints in the capella.category {@link Category} pass
+ * this filter.
  */
-public class CapellaConstraintFilter implements IConstraintFilter {
+public final class CapellaConstraintFilter implements IConstraintFilter {
+
+  public static final CapellaConstraintFilter INSTANCE = new CapellaConstraintFilter();
+  
+  private CapellaConstraintFilter() {
+  }
+
   /**
    * Category path for Common constraints.
    */

@@ -19,6 +19,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -35,12 +36,17 @@ public class CapellaDiagnostician extends Diagnostician {
     private AdapterFactory adapterFactory;
     private IProgressMonitor progressMonitor;
     
-  public CapellaDiagnostician (AdapterFactory adapterFactory_p, IProgressMonitor progressMonitor_p) {
-  	adapterFactory = adapterFactory_p;
-  	progressMonitor = progressMonitor_p;
+  public CapellaDiagnostician (AdapterFactory adapterFactory, IProgressMonitor progressMonitor) {
+  	this(EValidator.Registry.INSTANCE, adapterFactory, progressMonitor);
   }
 
-	@Override
+  public CapellaDiagnostician (EValidator.Registry registry, AdapterFactory adapterFactory, IProgressMonitor monitor) {
+    super(registry);
+    this.adapterFactory = adapterFactory;
+    this.progressMonitor = monitor;
+  }
+
+  @Override
   public String getObjectLabel(EObject eObject) {
     if (adapterFactory != null && !eObject.eIsProxy()) {
       IItemLabelProvider itemLabelProvider = (IItemLabelProvider)adapterFactory.adapt(eObject, IItemLabelProvider.class);

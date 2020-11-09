@@ -19,6 +19,7 @@ import org.polarsys.capella.core.commandline.core.CommandLineArgumentHelper;
 public class ValidationArgumentHelper extends CommandLineArgumentHelper {
   private String validationContext;
   private String validationRuleSet;
+  private String providerId;
 
   /**
    * {@inheritDoc}
@@ -33,9 +34,10 @@ public class ValidationArgumentHelper extends CommandLineArgumentHelper {
 
       if (ValidationCommandLineConstants.VALIDATION_CONTEXT.equalsIgnoreCase(arg)) {
         validationContext = args[++i];
-
       } else if (ValidationCommandLineConstants.VALIDATION_RULE_SET.equalsIgnoreCase(arg)) {
         validationRuleSet = args[++i];
+      } else if (ValidationCommandLineConstants.DIAGNOSTICIAN_PROVIDER_ID.equalsIgnoreCase(arg)) {
+        providerId = args[++i];
       }
     }
   }
@@ -53,4 +55,12 @@ public class ValidationArgumentHelper extends CommandLineArgumentHelper {
   public String getValidationRuleSet() {
     return validationRuleSet;
   }
+  
+  /**
+   * @return The diagnostician provider ID
+   */
+  public String getDiagnosticianProviderId() {
+    return providerId;
+  }
+
 }

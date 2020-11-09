@@ -16,21 +16,23 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.validation.model.EvaluationMode;
 import org.eclipse.emf.validation.service.IBatchValidator;
 import org.eclipse.emf.validation.service.IConstraintDescriptor;
 import org.eclipse.emf.validation.service.IConstraintFilter;
+import org.eclipse.emf.validation.service.ModelValidationService;
 import org.eclipse.osgi.util.NLS;
 import org.junit.Assert;
 import org.polarsys.capella.core.data.capellamodeller.Project;
 import org.polarsys.capella.core.libraries.model.CapellaModel;
-import org.polarsys.capella.core.validation.CapellaValidationActivator;
 import org.polarsys.capella.core.validation.utils.ValidationHelper;
 import org.polarsys.capella.test.framework.api.OracleDefinition;
 import org.polarsys.capella.test.validation.rules.ju.testcases.ValidationRuleTestCase;
 
 /**
  * Check "code" of all constraints on a various enough model.
- * This test apply each rules and check their state after operation. 
+ * This test apply each rules and check their state after operation.
+ *
  */
 public class CheckAllRulesCodeTest extends ValidationRuleTestCase {
   
@@ -65,11 +67,13 @@ public class CheckAllRulesCodeTest extends ValidationRuleTestCase {
   }
 
   @Override
+  // FIXME This doesn't execute disabled rules, also, why not validate just once?!
+  // FIXME
   public void test() throws Exception {
     CapellaModel model = getTestModel(getRequiredTestModel());
     Project project = model.getProject(getSessionForTestModel(getRequiredTestModel()).getTransactionalEditingDomain());
     if (project != null) {
-      IBatchValidator validator = CapellaValidationActivator.getDefault().getCapellaValidatorAdapter().getValidator();
+      IBatchValidator validator = ModelValidationService.getInstance().newValidator(EvaluationMode.BATCH);
       for (final IConstraintDescriptor icd : ValidationHelper.getAllConstraintDescriptors()) {
         IConstraintFilter filter = new IConstraintFilter() {
           public boolean accept(IConstraintDescriptor constraint_p, EObject target_p) {

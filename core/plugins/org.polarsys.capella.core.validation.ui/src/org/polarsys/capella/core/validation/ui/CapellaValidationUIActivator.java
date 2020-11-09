@@ -13,9 +13,8 @@
 package org.polarsys.capella.core.validation.ui;
 
 import org.osgi.framework.BundleContext;
-
 import org.polarsys.capella.common.ui.services.AbstractUIActivator;
-import org.polarsys.capella.core.validation.service.EPFValidatorAdapter;
+
 
 /**
  * The activator class controls the plug-in life cycle
@@ -29,11 +28,7 @@ public class CapellaValidationUIActivator extends AbstractUIActivator {
 
   // The shared instance
   private static CapellaValidationUIActivator plugin;
-  private EPFValidatorAdapter efpValidatorAdapter;
 
-  public EPFValidatorAdapter getEfpValidatorAdapter() {
-    return efpValidatorAdapter;
-  }
 
   /**
    * The constructor
@@ -48,9 +43,6 @@ public class CapellaValidationUIActivator extends AbstractUIActivator {
   @Override
   public void start(BundleContext context) throws Exception {
     super.start(context);
-    efpValidatorAdapter = new EPFValidatorAdapter();
-    // Add a constraints filter, to disable all constraints that are not capella ones, e.g GMF ones.
-    // efpValidatorAdapter.getValidator().addConstraintFilter(new EPFConstraintFilter());
     plugin = this;
   }
 

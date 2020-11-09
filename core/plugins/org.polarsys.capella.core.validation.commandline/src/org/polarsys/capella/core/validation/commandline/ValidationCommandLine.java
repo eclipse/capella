@@ -110,7 +110,7 @@ public class ValidationCommandLine extends AbstractWorkbenchCommandLine {
 
       if (!isEmtyOrNull(validationRuleSetFile)) {// validate selected EObjects
         List<String> ruleSet = readRules(validationRuleSetFile);
-        ensureEMFValidationActivation();
+        ModelValidationService.getInstance().loadXmlConstraintDeclarations();
         for (String ruleId : ruleSet) {
           EMFModelValidationPreferences.setConstraintDisabled(ruleId, true);
         }
@@ -127,6 +127,9 @@ public class ValidationCommandLine extends AbstractWorkbenchCommandLine {
         capellaValidateCLineAction.setSelectedObjects(semanticRootResource.getContents());
       }
 
+      capellaValidateCLineAction
+          .setDiagnosticianProviderId(((ValidationArgumentHelper) argHelper).getDiagnosticianProviderId());
+
       // Run the validation
       capellaValidateCLineAction.run();
 
@@ -142,16 +145,6 @@ public class ValidationCommandLine extends AbstractWorkbenchCommandLine {
     }
 
     return status;
-  }
-
-  /**
-   * Ensure that all constraints have been loaded.
-   */
-  public static void ensureEMFValidationActivation() {
-
-    ModelValidationService.getInstance().loadXmlConstraintDeclarations();
-
-    return;
   }
 
   /**
