@@ -12,7 +12,7 @@
  *******************************************************************************/
 target "Capella"
 
-include "https://download.eclipse.org/sirius/updates/stable/7.0.0-S20210609-041829/2021-06/targets/modules/gmf-runtime-1.13.tpd"
+include "https://download.eclipse.org/sirius/updates/stable/7.0.0-S20210710-160035/2021-06/targets/modules/gmf-runtime-1.13.tpd"
 
 with source, requirements
 
@@ -43,7 +43,7 @@ location eclipse "http://download.eclipse.org/releases/2021-06" {
 	com.google.guava
 }
 
-location sirius "https://download.eclipse.org/sirius/updates/stable/7.0.0-S20210609-041829/2021-06" {
+location sirius "https://download.eclipse.org/sirius/updates/stable/7.0.0-S20210710-160035/2021-06" {
 	org.eclipse.sirius.doc.feature.feature.group
 	org.eclipse.sirius.doc.feature.source.feature.group
 	org.eclipse.sirius.runtime.source.feature.group
@@ -56,7 +56,7 @@ location sirius "https://download.eclipse.org/sirius/updates/stable/7.0.0-S20210
 	org.eclipse.sirius.runtime.ide.ui.acceleo.source.feature.group
 }
 
-location kitalpha-runtime-core-master "https://download.eclipse.org/kitalpha/updates/release/runtime/5.1.0" {	
+location kitalpha-runtime-core-master "https://ci.eclipse.org/kitalpha/job/Kitalpha/view/change-requests/job/PR-676/9/artifact/releng/plugins/org.polarsys.kitalpha.releng.runtime.updatesite/target/repository/" {	
 	org.polarsys.kitalpha.ad.runtime.feature.source.feature.group
 	org.polarsys.kitalpha.cadence.feature.source.feature.group
 	org.polarsys.kitalpha.common.feature.source.feature.group
@@ -79,7 +79,7 @@ location kitalpha-runtime-core-master "https://download.eclipse.org/kitalpha/upd
 	org.polarsys.kitalpha.richtext.widget.ext.feature.source.feature.group
 	org.polarsys.kitalpha.transposer.feature.source.feature.group
 }
-location kitalpha-sdk-master "https://download.eclipse.org/kitalpha/updates/release/sdk/5.1.0" {
+location kitalpha-sdk-master "https://ci.eclipse.org/kitalpha/job/Kitalpha/view/change-requests/job/PR-676/9/artifact/releng/plugins/org.polarsys.kitalpha.releng.sdk.updatesite/target/repository/" {
 	org.polarsys.kitalpha.doc.feature.feature.group
 	org.polarsys.kitalpha.emde.sdk.feature.source.feature.group
 }
@@ -100,12 +100,12 @@ location egf "http://download.eclipse.org/egf/updates/1.6.2/2019-06/" {
 	org.eclipse.egf.sdk.feature.source.feature.group
 }
 
-location Nattable "https://download.eclipse.org/nattable/releases/1.5.0/repository/" {
+location Nattable "https://download.eclipse.org/nattable/releases/2.0.1/repository/" {
 	org.eclipse.nebula.widgets.nattable.core.feature.feature.group lazy
 	org.eclipse.nebula.widgets.nattable.extension.glazedlists.feature.feature.group lazy
 }
 
-location nebula "http://download.eclipse.org/nebula/releases/1.4.0/" {
+location nebula "http://download.eclipse.org/nebula/releases/2.3.0/" {
 	org.eclipse.nebula.widgets.richtext.feature.feature.group
 }
 
