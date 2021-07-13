@@ -12,11 +12,11 @@
  *******************************************************************************/
 target "Capella"
 
-include "https://download.eclipse.org/sirius/updates/releases/6.5.1/2020-06/targets/modules/gmf-runtime-1.13.tpd"
+include "https://download.eclipse.org/sirius/updates/stable/7.0.0-S20210609-041829/2021-06/targets/modules/gmf-runtime-1.13.tpd"
 
 with source, requirements
 
-location eclipse "http://download.eclipse.org/releases/2020-06" {
+location eclipse "http://download.eclipse.org/releases/2021-06" {
 	org.eclipse.sdk.feature.group
 	org.eclipse.platform.feature.group
 	org.eclipse.draw2d.source.feature.group
@@ -33,7 +33,6 @@ location eclipse "http://download.eclipse.org/releases/2020-06" {
 	org.eclipse.egit.source.feature.group
 	org.eclipse.mylyn_feature.feature.group
 	org.eclipse.mylyn.commons.feature.group
-	org.eclipse.mylyn.commons.sdk.feature.group
 	org.eclipse.mylyn.context_feature.feature.group
 	org.eclipse.mylyn.monitor.feature.group
 	org.eclipse.mylyn.team_feature.feature.group
@@ -44,7 +43,7 @@ location eclipse "http://download.eclipse.org/releases/2020-06" {
 	com.google.guava
 }
 
-location sirius "https://download.eclipse.org/sirius/updates/releases/6.5.1/2020-06" {
+location sirius "https://download.eclipse.org/sirius/updates/stable/7.0.0-S20210609-041829/2021-06" {
 	org.eclipse.sirius.doc.feature.feature.group
 	org.eclipse.sirius.doc.feature.source.feature.group
 	org.eclipse.sirius.runtime.source.feature.group
@@ -57,7 +56,7 @@ location sirius "https://download.eclipse.org/sirius/updates/releases/6.5.1/2020
 	org.eclipse.sirius.runtime.ide.ui.acceleo.source.feature.group
 }
 
-location kitalpha-runtime-core-master "https://download.eclipse.org/kitalpha/updates/stable/runtime/5.1.0-S202106140930" {	
+location kitalpha-runtime-core-master "https://download.eclipse.org/kitalpha/updates/release/runtime/5.1.0" {	
 	org.polarsys.kitalpha.ad.runtime.feature.source.feature.group
 	org.polarsys.kitalpha.cadence.feature.source.feature.group
 	org.polarsys.kitalpha.common.feature.source.feature.group
@@ -80,12 +79,12 @@ location kitalpha-runtime-core-master "https://download.eclipse.org/kitalpha/upd
 	org.polarsys.kitalpha.richtext.widget.ext.feature.source.feature.group
 	org.polarsys.kitalpha.transposer.feature.source.feature.group
 }
-location kitalpha-sdk-master "https://download.eclipse.org/kitalpha/updates/stable/sdk/5.1.0-S202106140930" {
+location kitalpha-sdk-master "https://download.eclipse.org/kitalpha/updates/release/sdk/5.1.0" {
 	org.polarsys.kitalpha.doc.feature.feature.group
 	org.polarsys.kitalpha.emde.sdk.feature.source.feature.group
 }
 
-location diffmerge-core "https://download.eclipse.org/diffmerge/stable/0.13.1-M3/emf-diffmerge-site" {
+location diffmerge-core "https://download.eclipse.org/diffmerge/releases/0.13.1/emf-diffmerge-site" {
 	org.eclipse.emf.diffmerge.feature.source.feature.group
 	org.eclipse.emf.diffmerge.sirius.feature.source.feature.group
 	org.eclipse.emf.diffmerge.gmf.feature.source.feature.group
@@ -93,12 +92,17 @@ location diffmerge-core "https://download.eclipse.org/diffmerge/stable/0.13.1-M3
 	org.eclipse.emf.diffmerge.egit.feature.source.feature.group
 }
 
-location amalgam "https://download.eclipse.org/modeling/amalgam/updates/stable/1.12.1-S20210330/capella" {
+location amalgam "https://download.eclipse.org/modeling/amalgam/updates/releases/1.12.1/capella" {
 	org.eclipse.amalgam.explorer.activity.source.feature.group
 }
 
 location egf "http://download.eclipse.org/egf/updates/1.6.2/2019-06/" {
 	org.eclipse.egf.sdk.feature.source.feature.group
+}
+
+location Nattable "https://download.eclipse.org/nattable/releases/1.5.0/repository/" {
+	org.eclipse.nebula.widgets.nattable.core.feature.feature.group lazy
+	org.eclipse.nebula.widgets.nattable.extension.glazedlists.feature.feature.group lazy
 }
 
 location nebula "http://download.eclipse.org/nebula/releases/1.4.0/" {
