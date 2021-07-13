@@ -15,18 +15,17 @@ package org.polarsys.capella.common.ui.toolkit.widgets.filter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.dialogs.PatternFilter;
-import org.eclipse.ui.internal.misc.StringMatcher;
+import org.eclipse.ui.dialogs.SearchPattern;
 
 public class CapellaPatternFilter extends PatternFilter {
   private String pattern;
 
-  StringMatcher matcher;
+  SearchPattern matcher;
 
   private boolean caseSensitiveEnabled = false;
 
@@ -55,7 +54,12 @@ public class CapellaPatternFilter extends PatternFilter {
         // So that if search for "Air", the results will include texts containing "Aircraft" or "Airplane"
         patternString += "*";
       }
-      matcher = new StringMatcher(patternString, !caseSensitiveEnabled, false);
+      if(caseSensitiveEnabled)
+        matcher = new SearchPattern(SearchPattern.RULE_PATTERN_MATCH & SearchPattern.RULE_CASE_SENSITIVE);
+      else
+        matcher = new SearchPattern(SearchPattern.RULE_PATTERN_MATCH);
+      
+      matcher.setPattern(patternString);
     }
   }
 
@@ -73,7 +77,7 @@ public class CapellaPatternFilter extends PatternFilter {
       return false;
     }
 
-    return matcher.match(text);
+    return matcher.matches(text);
   }
 
   public void setCaseSensitiveEnabled(boolean caseSensitiveEnabled) {

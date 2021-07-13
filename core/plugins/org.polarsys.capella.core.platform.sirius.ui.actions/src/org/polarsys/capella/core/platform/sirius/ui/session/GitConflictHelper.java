@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.egit.core.RepositoryCache;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -160,7 +161,7 @@ public class GitConflictHelper {
   public static boolean hasConflict(IFile file) {
     if (file != null) {
       java.nio.file.Path filePath = Paths.get(file.getLocationURI());
-      for (Repository repo : org.eclipse.egit.core.Activator.getDefault().getRepositoryCache().getAllRepositories()) {
+      for (Repository repo : RepositoryCache.getInstance().getAllRepositories()) {
         java.nio.file.Path repoPath = Paths.get(repo.getWorkTree().toURI());
         if (filePath.startsWith(repoPath)) {
           java.nio.file.Path relativizedPath = repoPath.relativize(filePath);
@@ -191,7 +192,7 @@ public class GitConflictHelper {
   public static boolean isInGitRepository(IFile file) {
     if (file != null) {
       java.nio.file.Path filePath = Paths.get(file.getLocationURI());
-      for (Repository repo : org.eclipse.egit.core.Activator.getDefault().getRepositoryCache().getAllRepositories()) {
+      for (Repository repo : RepositoryCache.getInstance().getAllRepositories()) {
         java.nio.file.Path repoPath = Paths.get(repo.getWorkTree().toURI());
         if (filePath.startsWith(repoPath)) {
           return true;

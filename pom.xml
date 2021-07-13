@@ -22,12 +22,11 @@
 	<packaging>pom</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<tycho-version>2.0.0</tycho-version>
-		<tycho-extras-version>2.0.0</tycho-extras-version>
+		<tycho-version>2.4.0-SNAPSHOT</tycho-version>
+		<tycho-extras-version>2.4.0-SNAPSHOT</tycho-extras-version>
 		<antrun-version>3.0.0</antrun-version>
 		<rcptt-version>2.5.1</rcptt-version>
 		<rcptt-runner-version>2.5.1</rcptt-runner-version>
-		<sonar-version>3.0.2</sonar-version>
 
 		<!-- for tycho -->
 		<tycho.scmUrl>scm:git:https://github.com/eclipse/capella.git</tycho.scmUrl>
@@ -223,6 +222,19 @@
 		</pluginManagement>
 	</build>
 
+	<pluginRepositories>
+		<pluginRepository>
+					<id>tycho-snapshots</id>
+					<url>https://repo.eclipse.org/content/repositories/tycho-snapshots/</url>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+			
 	<profiles>
 		<profile>
 			<id>macosx-jvm-flags</id>
@@ -336,7 +348,7 @@
 					<plugin>
 						<groupId>org.eclipse.cbi.maven.plugins</groupId>
 						<artifactId>eclipse-jarsigner-plugin</artifactId>
-						<version>1.1.5</version>
+						<version>1.3.1</version>
 						<executions>
 							<execution>
 								<id>sign</id>

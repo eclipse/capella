@@ -32,11 +32,11 @@
 			</comments>
 		</license>
 	</licenses>
-
+		
 	<properties>
     	<sonar.skip>true</sonar.skip>
-		<tycho-version>2.0.0</tycho-version>
-		<tycho-extras-version>2.0.0</tycho-extras-version>
+		<tycho-version>2.4.0-SNAPSHOT</tycho-version>
+		<tycho-extras-version>2.4.0-SNAPSHOT</tycho-extras-version>
 		<targetPlatform.name>capella.target-definition.targetplatform</targetPlatform.name>
 		<converterApplication.name>fr.obeo.releng.targetplatform.targetPlatform.converter</converterApplication.name>
 		<targetPlatform.id>full</targetPlatform.id>
@@ -53,12 +53,12 @@
 						<repository>
 							<id>targetplatform-tp</id>
 							<layout>p2</layout>
-							<url>http://download.eclipse.org/releases/oxygen/201709271000</url>
+							<url>https://download.eclipse.org/releases/oxygen/201709271000</url>
 						</repository>
 						<repository>
 							<id>targetplatform</id>
 							<layout>p2</layout>
-							<url>http://pdulth.github.io/fr.obeo.releng.targetplatform/p2/latest</url>
+							<url>https://pdulth.github.io/fr.obeo.releng.targetplatform/p2/latest</url>
 						</repository>
 					</repositories>
 					<!-- Set dependencies to launch the application -->
@@ -92,4 +92,19 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	
+	<pluginRepositories>
+		<pluginRepository>
+					<id>tycho-snapshots</id>
+					<url>https://repo.eclipse.org/content/repositories/tycho-snapshots/</url>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+			
 </project>

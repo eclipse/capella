@@ -5,7 +5,7 @@ pipeline {
   
 	tools {
 		maven 'apache-maven-latest'
-		jdk 'openjdk-jdk14-latest'
+		jdk 'openjdk-jdk16-latest'
 	}
   
 	environment {
@@ -37,13 +37,13 @@ pipeline {
 	    	steps {        
 	        	script { 
 		            def jdkWinFolder = 'winJRE'
-		            downloader.downloadWindowsJDK(jdkWinFolder)
+		            downloader.downloadWindowsJDK16(jdkWinFolder)
 		            
 		            def jdkLinuxFolder = 'linuxJRE'
-		            downloader.downloadLinuxJDK(jdkLinuxFolder)
+		            downloader.downloadLinuxJDK16(jdkLinuxFolder)
 		            
 		            def jdkMacFolder = 'macJRE'
-		            downloader.downloadMacJDK(jdkMacFolder)
+		            downloader.downloadMacJDK16(jdkMacFolder)
 	       		}
 	     	}
 	    }
@@ -52,7 +52,7 @@ pipeline {
       		steps {
       			script {
 					withCredentials([string(credentialsId: 'sonar-token-capella', variable: 'SONARCLOUD_TOKEN')]) {
-						withEnv(['MAVEN_OPTS=-Xmx4g']) {
+						withEnv(['MAVEN_OPTS=-Xmx6g']) {
 							def sign = github.isPullRequest() ? '' : '-Psign'
 							sh "mvn clean verify -f pom.xml -DjavaDocPhase=none -Pfull ${sign}"
 						}
